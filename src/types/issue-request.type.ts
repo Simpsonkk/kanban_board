@@ -1,4 +1,4 @@
 export type IssueRequest = {
-  repositoryName: string;
+  currentRepoName: string;
   nextIssuePage: string;
 };

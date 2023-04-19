@@ -3,8 +3,8 @@ import { IssueColumns } from './issue-columns.type';
 
 export type IssueState = {
   issueColumns: IssueColumns;
-  nextIssuePage: string;
   repositoryName: string;
+  isIssuesLoaded: string;
 };
 
 export type State = ReturnType<typeof store.getState>;

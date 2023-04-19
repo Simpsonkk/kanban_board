@@ -2,52 +2,57 @@ import { ChangeEvent, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { fetchRepoIssues } from '../store/api-actions';
-import { loadRepositoryName } from '../store/issue-slice';
-import { getNextIssuePage } from '../store/selectors';
+import { changeIssueLoadStatus, clearIssues, loadRepositoryName } from '../store/issue-slice';
+import { getRepositoryName } from '../store/selectors';
 
 function RepoIssueSearchForm(): JSX.Element {
-  const [repositoryName, setRepositoryName] = useState<string>('');
+  const [currentRepoName, setCurrentRepoName] = useState<string>('');
   const dispatch = useAppDispatch();
-  const nextIssuePage = useAppSelector(getNextIssuePage);
+  const previousRepoName = useAppSelector(getRepositoryName);
 
-  const formatrepositoryName = (e: ChangeEvent<HTMLInputElement>) =>
-    setRepositoryName(e.target.value.replace('https://github.com/', ''));
+  const formatRepositoryName = (e: ChangeEvent<HTMLInputElement>) =>
+    setCurrentRepoName(e.target.value.replace('https://github.com/', ''));
 
-  const getIssues = (pageNumber: string) => {
-    dispatch(fetchRepoIssues({ repositoryName, nextIssuePage: pageNumber }));
-    dispatch(loadRepositoryName(repositoryName.split('/')[1]));
+  const getIssues = () => {
+    dispatch(clearIssues());
+    dispatch(loadRepositoryName(currentRepoName));
+    dispatch(changeIssueLoadStatus('loading'));
+    dispatch(fetchRepoIssues({ currentRepoName, nextIssuePage: '1' }));
   };
 
   return (
     <div className="row justify-content-center mt-2">
-      <div className="col-7">
+      <div className="col-9">
         <input
           className="me-2 form-control form-control-lg"
-          onChange={formatrepositoryName}
-          type="text"
+          onChange={formatRepositoryName}
           placeholder="Enter repo URL"
         />
       </div>
-      <button className="col-1 me-2 btn btn-secondary btn-sm" onClick={() => getIssues('1')}>
-        Load
-      </button>
       <button
-        className="col-1 btn btn-secondary btn-sm"
-        onClick={() => getIssues(nextIssuePage)}
-        disabled={!nextIssuePage ? true : false}
+        className="col-2 me-2 btn btn-secondary btn-sm"
+        onClick={getIssues}
+        disabled={previousRepoName === currentRepoName ? true : false}
       >
-        Load next issues
+        Load Issues
       </button>
-      <div className="d-flex col-9 ms-0 mt-2">
+      <div className="d-flex col-11 ms-0 mt-2">
         <a
           className="text-decoration-none"
-          href={`https://github.com/${repositoryName.split('/')[0]}`}
+          href={`https://github.com/${currentRepoName.split('/')[0]}`}
+          target="_blank"
+          rel="noreferrer"
         >
-          {repositoryName.split('/')[0] || 'Profile'}
+          {currentRepoName.split('/')[0] || 'Profile'}
         </a>
         <p className="ms-2 me-2">&gt;</p>
-        <a className="text-decoration-none" href={`https://github.com/${repositoryName}`}>
-          {repositoryName.split('/')[1] || 'Repository'}
+        <a
+          className="text-decoration-none"
+          href={`https://github.com/${currentRepoName}`}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {currentRepoName.split('/')[1] || 'Repository'}
         </a>
       </div>
     </div>

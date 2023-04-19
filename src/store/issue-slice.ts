@@ -1,8 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { getIssueOrder } from '../services/issue-order';
+import { IssueColumns } from '../types/issue-columns.type';
 import { Issue } from '../types/issue.type';
 import { IssueState } from '../types/state.type';
+import { mergeArrays } from '../utils';
 
 const initialState: IssueState = {
   issueColumns: {
@@ -19,8 +21,8 @@ const initialState: IssueState = {
       items: [],
     },
   },
-  nextIssuePage: '1',
   repositoryName: '',
+  isIssuesLoaded: 'unknown',
 };
 
 export const issueSlice = createSlice({
@@ -28,60 +30,40 @@ export const issueSlice = createSlice({
   initialState,
   reducers: {
     loadIssues: (state, action: PayloadAction<Issue[]>) => {
-      const todo: Issue[] = [];
-      const inProgress: Issue[] = [];
-      const done: Issue[] = [];
-
-      // if (issue.id === 1669119666) {
-          
-      // }
-      // let priority = 10000
-
-
-      action.payload.forEach((issue) => {
-        // issue[priority] = priority
-
-        if (issue.state === 'open') {
-          if (!issue.assignee) {
-            todo.push(issue);
-          } else {
-            inProgress.push(issue);
-          }
-        } else if (issue.state === 'closed') {
-          done.push(issue);
-        }
-        // priority += 10000
-      });
-
-      const issueOrder = JSON.parse(getIssueOrder())
-      const currentRepo = issueOrder.find((repositories) => repositories.repositoryName === state.repositoryName).displacedIssues
-
-      // currentRepo.forEach((issue) => {
-
-      // })
-
-
-      state.issueColumns[1].items.push(...todo);
-      state.issueColumns[2].items.push(...inProgress);
-      state.issueColumns[3].items.push(...done);
-    },
-    checkIssueNextPage: (state, action: PayloadAction<string>) => {
-      const issuePageInfo = action.payload.split(', ').reduce((acc, part) => {
-        const match = part.match(/<([^>]+)>;\s*rel="([^"]+)"/);
-        if (match) {
-          const url = match[1];
-          const rel = match[2];
-          acc[rel] = url;
-        }
-        return acc;
-      }, {} as { [key: string]: string });
-
-      state.nextIssuePage = issuePageInfo.next?.match(/page=(\d+)/)![1];
+      state.issueColumns[1].items.push(...action.payload);
     },
     loadRepositoryName: (state, action: PayloadAction<string>) => {
       state.repositoryName = action.payload;
     },
+    clearIssues: (state) => {
+      state.issueColumns[1].items = [];
+      state.issueColumns[2].items = [];
+      state.issueColumns[3].items = [];
+    },
+    checkNewIssues: (state, action: PayloadAction<IssueColumns>) => {
+      const repositories = JSON.parse(getIssueOrder());
+      let currentRepo = repositories[state.repositoryName];
+      if (currentRepo) {
+        currentRepo = mergeArrays(action.payload[1].items, currentRepo);
+        state.issueColumns[1].items = currentRepo[1].items;
+        state.issueColumns[2].items = currentRepo[2].items;
+        state.issueColumns[3].items = currentRepo[3].items;
+      }
+    },
+    changeIssueLoadStatus: (state, action: PayloadAction<string>) => {
+      state.isIssuesLoaded = action.payload;
+    },
+    fillIssues: (state, action: PayloadAction<IssueColumns>) => {
+      state.issueColumns = action.payload;
+    },
   },
 });
 
-export const { loadIssues, checkIssueNextPage, loadRepositoryName } = issueSlice.actions;
+export const {
+  loadIssues,
+  loadRepositoryName,
+  clearIssues,
+  checkNewIssues,
+  changeIssueLoadStatus,
+  fillIssues,
+} = issueSlice.actions;

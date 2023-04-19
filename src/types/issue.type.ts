@@ -79,5 +79,4 @@ export type Issue = {
   updated_at: string;
   author_association: string;
   state_reason: string;
-  priority?: number;
 };

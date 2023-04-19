@@ -12,7 +12,7 @@ function IssueList({ column }: IssueListProps): JSX.Element {
     <>
       {column.items.map((item, index) => {
         return (
-          <Draggable key={item.id} draggableId={item.id.toString()} index={index}>
+          <Draggable key={item.id} draggableId={String(item.id)} index={index}>
             {(provided, snapshot) => {
               return (
                 <div
@@ -21,16 +21,16 @@ function IssueList({ column }: IssueListProps): JSX.Element {
                   {...provided.draggableProps}
                   {...provided.dragHandleProps}
                   style={{
-                    backgroundColor: snapshot.isDragging ? '#263B4A' : '#456C86',
+                    backgroundColor: snapshot.isDragging ? '#263B4A' : '#03845f',
                     ...provided.draggableProps.style,
                   }}
                 >
-                  <p className="m-0">{item.title}</p>
+                  <p className="m-0 fw-bold">{item.title}</p>
                   <p className="mt-1 mb-1">
-                    #{item.number}{' '}
+                    #{item.number}
                     {item.closed_at
-                      ? `was closed ${formatDate(item.closed_at)} `
-                      : `opened on ${formatDate(item.created_at)} `}
+                      ? ` was closed ${formatDate(item.closed_at)}`
+                      : ` opened on ${formatDate(item.created_at)}`}
                   </p>
                   <p className="m-0">
                     User: {item.user.login} | Comments {item.comments}

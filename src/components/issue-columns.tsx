@@ -2,13 +2,19 @@ import { Droppable } from 'react-beautiful-dnd';
 
 import { IssueColumn } from '../types/issue-columns.type';
 import IssueList from './issue-list';
+import Loader from './loader';
 
 type IssueColumnsProps = {
   columnId: string;
   column: IssueColumn;
+  isIssuesLoaded: string;
 };
 
-function IssueColumns({ columnId, column }: IssueColumnsProps): JSX.Element {
+function IssueColumns({ columnId, column, isIssuesLoaded }: IssueColumnsProps): JSX.Element {
+  if (isIssuesLoaded === 'loading') {
+    return <Loader />;
+  }
+
   return (
     <Droppable droppableId={columnId} key={columnId}>
       {(provided, snapshot) => {
