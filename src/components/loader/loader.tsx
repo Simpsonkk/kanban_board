@@ -1,4 +1,4 @@
-import { CSSProperties } from 'react';
+import React, { CSSProperties } from 'react';
 import { SpinnerDotted } from 'spinners-react';
 
 function Loader(): JSX.Element {
@@ -6,7 +6,7 @@ function Loader(): JSX.Element {
     marginTop: '70px',
   };
 
-  return <SpinnerDotted color="#4481c3" style={spinnerStyles} size={100} />;
+  return <SpinnerDotted color="#4481c3" style={spinnerStyles} size={100} data-testid="loader" />;
 }
 
 export default Loader;

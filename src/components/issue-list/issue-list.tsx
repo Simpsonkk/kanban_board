@@ -1,7 +1,8 @@
+import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 
-import { IssueColumn } from '../types/issue-columns.type';
-import { formatDate } from '../utils';
+import { IssueColumn } from '../../types/issue-columns.types';
+import { formatDate } from '../../utils/utils';
 
 type IssueListProps = {
   column: IssueColumn;
@@ -24,6 +25,7 @@ function IssueList({ column }: IssueListProps): JSX.Element {
                     backgroundColor: snapshot.isDragging ? '#263B4A' : '#03845f',
                     ...provided.draggableProps.style,
                   }}
+                  data-testid=""
                 >
                   <p className="m-0 fw-bold">{item.title}</p>
                   <p className="mt-1 mb-1">

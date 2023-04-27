@@ -2,13 +2,13 @@ import { AxiosInstance } from 'axios';
 
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { APIRoute } from '../enums';
-import { createAPI } from '../services/api';
-import { errorHandler } from '../services/error-handler';
-import { IssueRequest } from '../types/issue-request.type';
-import { AppDispatch } from '../types/state.type';
-import { changeIssueLoadStatus, loadIssues } from './issue-slice';
-import { store } from './store';
+import { APIRoute } from '../../enums';
+import { createAPI } from '../../services/api';
+import { errorHandler } from '../../services/error-handler';
+import { IssueRequest } from '../../types/issue-request.types';
+import { AppDispatch } from '../../types/state.types';
+import { changeIssueLoadStatus, loadIssues } from '../issue-slice/issue-slice';
+import { store } from '../store';
 
 const api = createAPI();
 
@@ -35,7 +35,6 @@ export const fetchRepoIssues = createAsyncThunk<
       }, {});
 
     const nextPage = issuePageInfo.next?.match(/page=(\d+)/)![1];
-
     if (nextPage) {
       await getRepoIssues({ currentRepoName, nextIssuePage: nextPage });
     }

@@ -1,5 +1,5 @@
-import { IssueColumns } from './types/issue-columns.type';
-import { Issue } from './types/issue.type';
+import { IssueColumns } from '../types/issue-columns.types';
+import { Issue } from '../types/issue.types';
 
 export const formatDate = (date: string): string =>
   new Date(date).toLocaleString('en-US', {

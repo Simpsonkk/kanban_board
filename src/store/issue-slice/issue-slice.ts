@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { getIssueOrder } from '../services/issue-order';
-import { IssueColumns } from '../types/issue-columns.type';
-import { Issue } from '../types/issue.type';
-import { IssueState } from '../types/state.type';
-import { mergeArrays } from '../utils';
+import { getIssueOrder } from '../../services/issue-order';
+import { IssueColumns } from '../../types/issue-columns.types';
+import { Issue } from '../../types/issue.types';
+import { IssueState } from '../../types/state.types';
+import { mergeArrays } from '../../utils/utils';
 
 const initialState: IssueState = {
   issueColumns: {

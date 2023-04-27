@@ -1,11 +1,11 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 
-import { useAppDispatch, useAppSelector } from '../hooks';
-import { getIssueOrder, saveIssueOrder } from '../services/issue-order';
-import { checkNewIssues, fillIssues } from '../store/issue-slice';
-import { getIssueColumns, getLoadedDataStatus, getRepositoryName } from '../store/selectors';
-import IssueColumns from './issue-columns';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getIssueOrder, saveIssueOrder } from '../../services/issue-order';
+import { checkNewIssues, fillIssues } from '../../store/issue-slice/issue-slice';
+import { getIssueColumns, getLoadedDataStatus, getRepositoryName } from '../../store/selectors';
+import IssueColumns from '../issue-columns/issue-columns';
 
 function IssueTable(): JSX.Element {
   const repositoryName = useAppSelector(getRepositoryName);
@@ -64,7 +64,7 @@ function IssueTable(): JSX.Element {
   };
 
   return (
-    <div className="d-flex justify-content-center row">
+    <div className="d-flex justify-content-center row" data-testid="issueTable">
       <DragDropContext onDragEnd={(result) => onDragEnd(result)}>
         {Object.entries(issueColumns).map(([columnId, column]) => {
           return (

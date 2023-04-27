@@ -1,4 +1,4 @@
-import { Issue } from './issue.type';
+import { Issue } from './issue.types';
 
 export type IssueColumns = {
   1: IssueColumn;

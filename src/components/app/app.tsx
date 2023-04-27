@@ -1,7 +1,8 @@
+import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import { AppRoute } from '../enums';
-import KanbanBoardPage from '../pages/kanban-board-page';
+import { AppRoute } from '../../enums';
+import KanbanBoardPage from '../../pages/kanban-board-page/kanban-board-page';
 
 function App() {
   return (

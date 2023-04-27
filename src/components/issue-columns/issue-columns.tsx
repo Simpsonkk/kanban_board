@@ -1,8 +1,9 @@
+import React from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 
-import { IssueColumn } from '../types/issue-columns.type';
-import IssueList from './issue-list';
-import Loader from './loader';
+import { IssueColumn } from '../../types/issue-columns.types';
+import IssueList from '../issue-list/issue-list';
+import Loader from '../loader/loader';
 
 type IssueColumnsProps = {
   columnId: string;
@@ -29,6 +30,7 @@ function IssueColumns({ columnId, column, isIssuesLoaded }: IssueColumnsProps): 
               overflowY: 'auto',
             }}
             className="p-1 rounded"
+            data-testid="droppable"
           >
             <IssueList column={column} />
             {provided.placeholder}

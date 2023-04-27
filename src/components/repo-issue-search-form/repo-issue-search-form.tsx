@@ -1,9 +1,11 @@
-import { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 
-import { useAppDispatch, useAppSelector } from '../hooks';
-import { fetchRepoIssues } from '../store/api-actions';
-import { changeIssueLoadStatus, clearIssues, loadRepositoryName } from '../store/issue-slice';
-import { getRepositoryName } from '../store/selectors';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchRepoIssues } from '../../store/api-actions/api-actions';
+import {
+  changeIssueLoadStatus, clearIssues, loadRepositoryName
+} from '../../store/issue-slice/issue-slice';
+import { getRepositoryName } from '../../store/selectors';
 
 function RepoIssueSearchForm(): JSX.Element {
   const [currentRepoName, setCurrentRepoName] = useState<string>('');
@@ -21,7 +23,7 @@ function RepoIssueSearchForm(): JSX.Element {
   };
 
   return (
-    <div className="row justify-content-center mt-2">
+    <div className="row justify-content-center mt-2" data-testid="searchForm">
       <div className="col-9">
         <input
           className="me-2 form-control form-control-lg"
@@ -42,6 +44,7 @@ function RepoIssueSearchForm(): JSX.Element {
           href={`https://github.com/${currentRepoName.split('/')[0]}`}
           target="_blank"
           rel="noreferrer"
+          data-testid="Profile"
         >
           {currentRepoName.split('/')[0] || 'Profile'}
         </a>
@@ -51,6 +54,7 @@ function RepoIssueSearchForm(): JSX.Element {
           href={`https://github.com/${currentRepoName}`}
           target="_blank"
           rel="noreferrer"
+          data-testid="Repository"
         >
           {currentRepoName.split('/')[1] || 'Repository'}
         </a>

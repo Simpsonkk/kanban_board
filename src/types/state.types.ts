@@ -1,5 +1,5 @@
 import { store } from '../store/store';
-import { IssueColumns } from './issue-columns.type';
+import { IssueColumns } from './issue-columns.types';
 
 export type IssueState = {
   issueColumns: IssueColumns;
