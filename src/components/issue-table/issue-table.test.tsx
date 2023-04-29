@@ -7,7 +7,7 @@ import configureStore from 'redux-mock-store';
 
 import { getByText, render, screen } from '@testing-library/react';
 
-import { fakeFullStore } from '../_mocks_/store';
+import { fakeFullStore } from '../../_mocks_/store';
 import IssueColumns from '../issue-columns/issue-columns';
 import IssueTable from './issue-table';
 

@@ -6,7 +6,7 @@ import configureStore from 'redux-mock-store';
 
 import { render, screen } from '@testing-library/react';
 
-import { fakeStore } from '../../components/_mocks_/store';
+import { fakeStore } from '../../_mocks_/store';
 import KanbanBoardPage from './kanban-board-page';
 
 const mockStore = configureStore();

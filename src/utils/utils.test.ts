@@ -1,5 +1,5 @@
-import { mockIssues } from '../components/_mocks_/issues';
-import { fakeStore } from '../components/_mocks_/store';
+import { mockIssues } from '../_mocks_/issues';
+import { fakeStore } from '../_mocks_/store';
 import { formatDate, mergeArrays } from './utils';
 
 describe('utils', () => {

@@ -38,8 +38,10 @@ export const fetchRepoIssues = createAsyncThunk<
     if (nextPage) {
       await getRepoIssues({ currentRepoName, nextIssuePage: nextPage });
     }
-    store.dispatch(changeIssueLoadStatus('loaded'));
+    return response.data;
   } catch (error) {
     errorHandler(error);
+  } finally {
+    store.dispatch(changeIssueLoadStatus('loaded'));
   }
 });

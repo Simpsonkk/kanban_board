@@ -2,13 +2,14 @@ import '@testing-library/jest-dom';
 
 import React from 'react';
 import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
 
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
+import { fakeStore } from '../../_mocks_/store';
+import { AppRoute } from '../../enums';
 import KanbanBoardPage from '../../pages/kanban-board-page/kanban-board-page';
-import { fakeStore } from '../_mocks_/store';
 
 const mockStore = configureStore();
 
@@ -16,14 +17,15 @@ describe('KanbanBoardPage', () => {
   it('render KanbanBoardPage', () => {
     const store = mockStore(fakeStore);
 
-    render(
+    const view = render(
       <Provider store={store}>
         <MemoryRouter>
-          <KanbanBoardPage />
+          <Routes>
+            <Route path={AppRoute.Main} element={<KanbanBoardPage />} />
+          </Routes>
         </MemoryRouter>
       </Provider>
     );
-
-    expect(screen.getByText(/in progress/i)).toBeInTheDocument();
+    expect(view).toMatchSnapshot();
   });
 });

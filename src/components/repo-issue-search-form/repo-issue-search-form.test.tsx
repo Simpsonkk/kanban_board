@@ -8,8 +8,8 @@ import configureStore from 'redux-mock-store';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { fakeStore } from '../../_mocks_/store';
 import { clearIssues, loadRepositoryName } from '../../store/issue-slice/issue-slice';
-import { fakeStore } from '../_mocks_/store';
 import RepoIssueSearchForm from './repo-issue-search-form';
 
 const mockStore = configureStore();

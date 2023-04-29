@@ -1,4 +1,4 @@
-import { Issue } from '../../types/issue.types';
+import { Issue } from '../types/issue.types';
 
 export const mockIssues: Issue[] = [
   {
